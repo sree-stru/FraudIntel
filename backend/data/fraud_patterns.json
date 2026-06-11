@@ -1,0 +1,242 @@
+[
+  {
+    "pattern_id": "PAT-001",
+    "typology": "account_takeover",
+    "name": "Account Takeover Attack",
+    "description": "Unauthorized access to a legitimate customer account through credential theft, phishing, or session hijacking. The attacker rapidly changes account settings and initiates high-value transfers before the real owner notices. Velocity of changes and device anomalies are primary detection signals.",
+    "risk_weight": 9,
+    "indicators": [
+      "New device login within 24 hours of password reset",
+      "Contact information changed immediately after authentication",
+      "Wire transfer initiated from unrecognized IP within first session",
+      "Failed MFA attempts followed by successful SIM-swap bypass",
+      "Login geolocation inconsistent with account history by over 500 miles"
+    ],
+    "detection_rules": {
+      "velocity_threshold": 3,
+      "amount_threshold": 5000,
+      "time_window_hours": 24
+    },
+    "example_scenario": "An attacker obtains credentials via a phishing email, logs in from an overseas VPN, disables email alerts, and wires $42,000 to an offshore account within 18 minutes."
+  },
+  {
+    "pattern_id": "PAT-002",
+    "typology": "synthetic_identity",
+    "name": "Synthetic Identity Fraud",
+    "description": "Creation of a fictitious identity by combining real and fabricated personally identifiable information (PII) such as SSNs, names, and dates of birth. The synthetic persona is aged over months to build creditworthiness. Once credit limits are high enough, the fraudster maxes out all lines and vanishes.",
+    "risk_weight": 8,
+    "indicators": [
+      "SSN issued after 2011 with no prior credit history before account opening",
+      "Address shared by three or more recently opened accounts",
+      "Authorized-user tradeline piggybacking across unrelated accounts",
+      "Phone number linked to a VoIP provider with no prior subscriber history",
+      "Credit inquiry pattern shows simultaneous applications across multiple lenders"
+    ],
+    "detection_rules": {
+      "velocity_threshold": 5,
+      "amount_threshold": 10000,
+      "time_window_hours": 720
+    },
+    "example_scenario": "A fraud ring constructs 15 synthetic identities using real SSNs from minors, ages each identity for 14 months as authorized users, then simultaneously maxes out $380,000 in unsecured credit lines."
+  },
+  {
+    "pattern_id": "PAT-003",
+    "typology": "bust_out",
+    "name": "Bust-Out Scheme",
+    "description": "A calculated scheme where an individual or ring builds credit legitimately over time, then rapidly draws down all available credit with no intention of repayment. Often coordinated across multiple accounts and institutions simultaneously. Behavioral shift from normal usage to aggressive extraction is the hallmark indicator.",
+    "risk_weight": 9,
+    "indicators": [
+      "Sudden spike in credit utilization from below 30% to above 90% within one billing cycle",
+      "Cash advance activity after months of revolving purchase-only behavior",
+      "Balance transfers initiated to newly opened accounts at other institutions",
+      "Minimum payments made consistently for 6+ months followed by abrupt cessation",
+      "Multiple large purchases at high-resale-value merchants within 48 hours"
+    ],
+    "detection_rules": {
+      "velocity_threshold": 8,
+      "amount_threshold": 15000,
+      "time_window_hours": 48
+    },
+    "example_scenario": "Four linked accounts with shared device fingerprints maintain pristine payment histories for 10 months, then simultaneously extract $127,000 across cash advances, electronics purchases, and balance transfers within 36 hours."
+  },
+  {
+    "pattern_id": "PAT-004",
+    "typology": "money_laundering",
+    "name": "Money Laundering (Layering)",
+    "description": "The process of disguising the origins of illicitly obtained funds by routing them through a complex series of transactions, shell companies, and jurisdictions. The layering stage specifically involves multiple rapid transfers designed to obscure the audit trail. Typified by circular flows and pass-through entities with no economic purpose.",
+    "risk_weight": 10,
+    "indicators": [
+      "Funds routed through three or more jurisdictions within 72 hours",
+      "Round-dollar wire transfers to shell companies with no operating revenue",
+      "Rapid movement of funds through correspondent banking chains with immediate withdrawal",
+      "Account holder is a PEP or has connections to sanctioned jurisdictions",
+      "Transaction amounts just below currency transaction report thresholds"
+    ],
+    "detection_rules": {
+      "velocity_threshold": 6,
+      "amount_threshold": 50000,
+      "time_window_hours": 72
+    },
+    "example_scenario": "Proceeds from a ransomware payment are converted to stablecoin, bridged to a fiat on-ramp in Singapore, wired to a Latvian shell company, and deposited into a real-estate escrow account in Miami within 48 hours."
+  },
+  {
+    "pattern_id": "PAT-005",
+    "typology": "cnp_fraud",
+    "name": "Card-Not-Present Fraud",
+    "description": "Fraudulent use of stolen card credentials in online or phone transactions where the physical card is not required. Often follows large-scale data breaches or skimming operations. Attackers test cards with small purchases before escalating to high-value orders shipped to drop addresses.",
+    "risk_weight": 7,
+    "indicators": [
+      "Multiple small-value test transactions under $5 at digital goods merchants",
+      "Shipping address differs from billing address and has no prior association",
+      "Card used in rapid succession across merchants in different countries",
+      "AVS mismatch combined with correct CVV on first transaction attempt",
+      "BIN associated with a recently disclosed data breach"
+    ],
+    "detection_rules": {
+      "velocity_threshold": 10,
+      "amount_threshold": 2000,
+      "time_window_hours": 4
+    },
+    "example_scenario": "Stolen card details from a retail breach are tested with $0.50 donations to a charity, then used to purchase $8,400 in electronics shipped to a vacant warehouse address within two hours."
+  },
+  {
+    "pattern_id": "PAT-006",
+    "typology": "bec",
+    "name": "Business Email Compromise",
+    "description": "A sophisticated social engineering attack where fraudsters impersonate executives, vendors, or legal counsel to trick employees into authorizing wire transfers or divulging sensitive information. Often involves domain spoofing or compromised email accounts. Average losses per incident frequently exceed $100,000.",
+    "risk_weight": 9,
+    "indicators": [
+      "Wire transfer request from executive email during non-business hours or while traveling",
+      "Payment instructions redirect to a new beneficiary account not in the vendor master file",
+      "Email domain uses lookalike characters (homoglyph substitution)",
+      "Urgent language requesting bypassing of standard dual-authorization controls",
+      "Invoice amount significantly exceeds historical average for the claimed vendor"
+    ],
+    "detection_rules": {
+      "velocity_threshold": 1,
+      "amount_threshold": 25000,
+      "time_window_hours": 8
+    },
+    "example_scenario": "A CFO's email is compromised during an overseas trip; the attacker sends instructions to accounts payable to wire $310,000 to a 'new counsel retainer' at a Hong Kong bank, citing a fabricated acquisition deadline."
+  },
+  {
+    "pattern_id": "PAT-007",
+    "typology": "check_kiting",
+    "name": "Check Fraud / Kiting",
+    "description": "Exploitation of the float period between check deposit and clearance to create artificial balances across two or more accounts. The fraudster writes checks between accounts, withdrawing funds before the checks bounce. Modern detection relies on velocity of inter-account transfers and clearing-time anomalies.",
+    "risk_weight": 6,
+    "indicators": [
+      "Circular check deposits between two accounts at different institutions within 48 hours",
+      "Withdrawals consistently made during the float window before check clearance",
+      "Account balances oscillate dramatically on a daily basis",
+      "High volume of deposited checks with sequential serial numbers from a single counterparty",
+      "NSF (non-sufficient funds) rate exceeding 20% over a 30-day period"
+    ],
+    "detection_rules": {
+      "velocity_threshold": 4,
+      "amount_threshold": 8000,
+      "time_window_hours": 48
+    },
+    "example_scenario": "A small business owner writes a $45,000 check from Bank A to Bank B, immediately withdraws $40,000 from Bank B, then covers Bank A with another check from a third account—repeating the cycle for six weeks before collapse."
+  },
+  {
+    "pattern_id": "PAT-008",
+    "typology": "first_party_fraud",
+    "name": "First-Party Fraud",
+    "description": "Fraud committed by the actual account holder who misrepresents information or disputes legitimate transactions to obtain undeserved refunds, credit, or insurance payouts. Includes false chargeback claims ('friendly fraud'), application fraud with inflated income, and staged losses for insurance purposes.",
+    "risk_weight": 5,
+    "indicators": [
+      "Chargeback filed for digital goods after confirmed delivery and download",
+      "Income stated on application exceeds reported W-2 or tax return by over 40%",
+      "Multiple dispute claims across different merchants within a 90-day period",
+      "Customer claims non-receipt despite GPS-confirmed delivery signature",
+      "Account opened with heavily rounded financial figures suggesting estimation"
+    ],
+    "detection_rules": {
+      "velocity_threshold": 3,
+      "amount_threshold": 3000,
+      "time_window_hours": 168
+    },
+    "example_scenario": "A customer purchases a $2,800 laptop online, receives and signs for the delivery, then files a chargeback claiming the package was never received—their fourth such dispute across different retailers in three months."
+  },
+  {
+    "pattern_id": "PAT-009",
+    "typology": "app_fraud",
+    "name": "Authorized Push Payment Fraud",
+    "description": "The victim is socially engineered into voluntarily authorizing a payment to a fraudster-controlled account. Unlike unauthorized fraud, the victim initiates the transfer themselves, making it extremely difficult to reverse. Common pretexts include romance scams, fake investment platforms, and impersonation of bank staff.",
+    "risk_weight": 8,
+    "indicators": [
+      "First-time payee receiving a large transfer from a previously inactive account",
+      "Customer on the phone during the transfer and reading amounts aloud",
+      "Rapid escalation in payment amounts over days following an initial small transfer",
+      "Recipient account is newly opened with minimal KYC documentation",
+      "Customer resists fraud warnings and insists on completing the payment"
+    ],
+    "detection_rules": {
+      "velocity_threshold": 2,
+      "amount_threshold": 10000,
+      "time_window_hours": 12
+    },
+    "example_scenario": "A retiree is convinced by a fake investment platform to transfer $75,000 in three installments over five days to a mule account, each time dismissing the bank's scam warning pop-up."
+  },
+  {
+    "pattern_id": "PAT-010",
+    "typology": "structuring",
+    "name": "Structuring (Smurfing)",
+    "description": "Deliberately breaking a large financial transaction into smaller amounts to evade Currency Transaction Report (CTR) filing thresholds, typically $10,000 in the US. Deposits are spread across branches, days, or individuals (smurfs) to avoid triggering mandatory reporting. Structuring itself is a federal crime regardless of the source of funds.",
+    "risk_weight": 7,
+    "indicators": [
+      "Multiple cash deposits between $9,000 and $9,900 within a rolling 7-day period",
+      "Deposits made at different branches of the same institution on the same day",
+      "Round-number deposits that aggregate to just below reporting thresholds",
+      "Multiple individuals depositing to the same account from different locations",
+      "Customer declines to complete CTR paperwork and reduces transaction amount"
+    ],
+    "detection_rules": {
+      "velocity_threshold": 5,
+      "amount_threshold": 9500,
+      "time_window_hours": 168
+    },
+    "example_scenario": "A restaurant owner deposits $9,200 in cash every Monday and Thursday across three branches, totaling $73,600 per month while never triggering a single CTR filing."
+  },
+  {
+    "pattern_id": "PAT-011",
+    "typology": "mule_account",
+    "name": "Mule Account",
+    "description": "A bank account used as a pass-through to receive and forward illicit funds, often operated by a witting or unwitting accomplice recruited through job scams or social media. Mule accounts are critical infrastructure for laundering proceeds from phishing, BEC, and ransomware attacks. Funds typically remain in the account for hours before being forwarded.",
+    "risk_weight": 8,
+    "indicators": [
+      "High-value incoming transfer immediately followed by outbound wire minus a small commission",
+      "Account holder is a student or recently unemployed individual with no history of such balances",
+      "Funds forwarded to cryptocurrency exchanges or international remittance services within hours",
+      "Account opened online with minimal interaction and basic KYC only",
+      "Incoming transfers from multiple unrelated senders in different geographies"
+    ],
+    "detection_rules": {
+      "velocity_threshold": 4,
+      "amount_threshold": 7500,
+      "time_window_hours": 24
+    },
+    "example_scenario": "A college student recruited via Instagram receives $22,000 from a BEC victim, keeps $500 as commission, and forwards the remainder via Wise to three accounts in Nigeria within four hours."
+  },
+  {
+    "pattern_id": "PAT-012",
+    "typology": "insider_threat",
+    "name": "Insider Threat",
+    "description": "Fraud or data exfiltration perpetrated by an employee, contractor, or trusted insider who abuses their authorized access to systems and data. Insiders may override controls, access accounts outside their portfolio, or collude with external actors. Detection requires behavioral analytics on system access patterns and segregation-of-duty violations.",
+    "risk_weight": 10,
+    "indicators": [
+      "Employee accessing customer records outside assigned portfolio or business hours",
+      "Override of transaction limits or fraud alerts without documented justification",
+      "Bulk export or download of customer PII exceeding role-based access norms",
+      "Same employee involved in both initiating and approving high-value transactions",
+      "Login from personal device or unauthorized network to core banking systems"
+    ],
+    "detection_rules": {
+      "velocity_threshold": 2,
+      "amount_threshold": 20000,
+      "time_window_hours": 12
+    },
+    "example_scenario": "A branch operations manager accesses 47 dormant accounts over a weekend, reactivates them, transfers a total of $185,000 to an external account owned by a family member, and suppresses the resulting alerts."
+  }
+]

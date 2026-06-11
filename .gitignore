@@ -1,0 +1,30 @@
+# Virtual environments
+venv/
+.venv/
+
+# Python bytecode
+__pycache__/
+*.pyc
+*.pyo
+
+# Environment variables
+.env
+!.env.example
+
+# Node
+node_modules/
+
+# IDEs
+.idea/
+.vscode/
+
+# Build/Distribution
+*.egg-info/
+dist/
+build/
+
+# Database
+*.db
+
+# OS
+.DS_Store

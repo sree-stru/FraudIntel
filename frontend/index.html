@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="AI-powered fraud investigation agent with real-time network analysis, risk scoring, and SAR generation" />
+  <title>FraudIntel — AI Fraud Investigation Dashboard</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+
+  <!-- Apache ECharts for Cyber Network Graph -->
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+
+  <!-- FontAwesome for standard icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css?v=2" />
+</head>
+<body>
+
+  <!-- ================================================================== -->
+  <!-- 0. CINEMATIC INTRO                                                 -->
+  <!-- ================================================================== -->
+  <div id="cinematic-intro" class="cinematic-intro">
+    <button id="skip-intro-btn" class="skip-intro-btn">SKIP INTRO <i class="fas fa-forward-step"></i></button>
+
+    <!-- SCREEN 1 -->
+    <div id="intro-screen-1" class="intro-screen">
+      <div class="screen-1-text">
+        <p>Fraud doesn't need another alert.</p>
+        <p>It needs an investigator.</p>
+      </div>
+    </div>
+
+    <!-- SCREEN 2 -->
+    <div id="intro-screen-2" class="intro-screen">
+      <div class="screen-2-text">
+        <p>Every year, <span class="highlight">$4.4 trillion</span> is lost to global financial crime.</p>
+        <p>Legacy fraud systems generate millions of alerts,</p>
+        <p>but up to 95% are noise.</p>
+        <p class="pulse-text mt-4">We're looking for the 5% that matters.</p>
+      </div>
+    </div>
+
+    <!-- SCREEN 3 -->
+    <div id="intro-screen-3" class="intro-screen">
+      <div class="screen-3-content glass-panel">
+        <h1 class="intro-logo"><img src="img/logo.svg" alt="FraudIntel Logo" class="logo-img"> FRAUDINTEL</h1>
+        <div class="intro-subtitle">The AI That Investigates</div>
+        <div class="intro-micro-line">DETECTING &middot; CONNECTING &middot; INVESTIGATING</div>
+      </div>
+    </div>
+
+    <!-- SCREEN 4 -->
+    <div id="intro-screen-4" class="intro-screen">
+      <div class="screen-4-content">
+        <h2>Six AI Agents. One Command Center.</h2>
+        <ul class="agent-list">
+          <li id="agent-li-1"><span class="agent-icon"><i class="fas fa-user-tie"></i></span> CHIEF INVESTIGATOR</li>
+          <li id="agent-li-2"><span class="agent-icon"><i class="fas fa-search"></i></span> EVIDENCE GATHERER</li>
+          <li id="agent-li-3"><span class="agent-icon"><i class="fas fa-chart-bar"></i></span> RISK SCORER</li>
+          <li id="agent-li-4"><span class="agent-icon"><i class="fas fa-user-check"></i></span> AUDITOR AGENT</li>
+          <li id="agent-li-5"><span class="agent-icon"><i class="fas fa-balance-scale"></i></span> COMPLIANCE AGENT</li>
+          <li id="agent-li-6"><span class="agent-icon"><i class="fas fa-shield-alt"></i></span> THREAT INTELLIGENCE</li>
+        </ul>
+        <div class="screen-4-footer">From raw data &rarr; to structured investigation &rarr; to proactive intelligence.</div>
+      </div>
+    </div>
+
+    <!-- SCREEN 5 -->
+    <div id="intro-screen-5" class="intro-screen">
+      <div class="screen-5-content">
+        <div class="loading-header">INITIALIZING COMMAND CENTER</div>
+        <div class="loading-steps" id="loading-steps">
+          <div class="loading-step" id="step-1">[01/06] <i class="fas fa-user-tie"></i> CHIEF INVESTIGATOR<br><span>Preparing mission protocols...</span></div>
+          <div class="loading-step" id="step-2">[02/06] <i class="fas fa-search"></i> EVIDENCE GATHERER<br><span>Collecting evidence...</span></div>
+          <div class="loading-step" id="step-3">[03/06] <i class="fas fa-chart-bar"></i> RISK SCORER<br><span>Calculating threat exposure...</span></div>
+          <div class="loading-step" id="step-4">[04/06] <i class="fas fa-user-check"></i> AUDITOR AGENT<br><span>Validating findings...</span></div>
+          <div class="loading-step" id="step-5">[05/06] <i class="fas fa-balance-scale"></i> COMPLIANCE AGENT<br><span>Reviewing regulatory obligations...</span></div>
+          <div class="loading-step" id="step-6">[06/06] <i class="fas fa-shield-alt"></i> THREAT INTELLIGENCE<br><span>Activating proactive hunting...</span></div>
+        </div>
+        <div class="loading-micro-status" id="loading-micro-status">Orchestrating agents...</div>
+      </div>
+    </div>
+
+    <!-- SCREEN 6 -->
+    <div id="intro-screen-6" class="intro-screen">
+      <div class="screen-6-content">
+        <h1 class="ready-title">INVESTIGATION TEAM READY</h1>
+        <p class="ready-subtext">FraudIntel has completed autonomous analysis across<br>transactions, entities, and behavioral patterns.</p>
+        <p class="punch-line">Fraud doesn't need another alert.<br>It needs an investigator.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================================================== -->
+  <!-- 1. HEADER — HUD Command Bar                                        -->
+  <!-- ================================================================== -->
+  <header id="app-header" role="banner" class="continental-header">
+    <div class="continental-title-group">
+      <h1 class="logo" id="logo"><img src="img/logo.svg" alt="FraudIntel" class="logo-img">FRAUDINTEL</h1>
+      <div class="continental-sub-bar">AI FRAUD INVESTIGATION SYSTEM</div>
+    </div>
+
+    <div class="header-actions">
+      <button id="btn-mission-mode" class="btn-mission-mode" onclick="toggleCommandCenter()"><i class="fas fa-crosshairs"></i> MISSION MODE</button>
+      <div class="header-search">
+        <input
+          type="search"
+          id="search-input"
+          placeholder="SEARCH CASES..."
+          aria-label="Search cases, accounts, and alerts"
+          autocomplete="off"
+        />
+        <button id="search-btn" aria-label="Search" class="search-btn">
+          <i class="fas fa-search"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- System Status Ticker -->
+  <div class="system-status-ticker" id="system-ticker">
+    <div class="ticker-item"><span class="ticker-dot green"></span> MONGODB ATLAS: CONNECTED</div>
+    <div class="ticker-item"><span class="ticker-dot green"></span> MCP SERVER: ONLINE</div>
+    <div class="ticker-item"><span class="ticker-dot green"></span> GEMINI 3.5 FLASH: READY</div>
+    <div class="ticker-item">|</div>
+    <div class="ticker-item"><i class="fas fa-shield-alt" style="color: var(--accent-red); font-size: 0.6rem;"></i> THREAT LEVEL: ELEVATED</div>
+    <div class="ticker-item">|</div>
+    <div class="ticker-item" id="ticker-time"></div>
+  </div>
+
+  <!-- Global Error Banner (hidden by default) -->
+  <div id="global-error-banner" class="hidden" style="background: rgba(255,60,60,0.08); color: var(--accent-red); padding: 8px 16px; text-align: center; font-weight: 500; font-family: var(--font-mono); z-index: 100; position: relative; border-bottom: 1px solid rgba(255,60,60,0.15); letter-spacing: 1px; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 0.75rem;">
+    <i class="fas fa-exclamation-triangle"></i> <span id="error-banner-text">Connection interrupted — retrying automatically...</span>
+    <button onclick="this.parentElement.classList.add('hidden')" style="background:none;border:1px solid rgba(255,60,60,0.3);color:var(--accent-red);cursor:pointer;padding:2px 8px;border-radius:0;font-size:0.65rem;font-family:var(--font-mono);letter-spacing:1px;">DISMISS</button>
+  </div>
+
+  <!-- ================================================================== -->
+  <!-- 2. STATS BAR                                                       -->
+  <!-- ================================================================== -->
+  <section id="stats-bar" aria-label="Dashboard statistics">
+    <div class="stat-card" id="stat-active-cases">
+      <span class="stat-value">—</span>
+      <span class="stat-label">Active Cases</span>
+    </div>
+    <div class="stat-card" id="stat-pending-alerts">
+      <span class="stat-value">—</span>
+      <span class="stat-label">Pending Alerts</span>
+    </div>
+    <div class="stat-card" id="stat-high-risk">
+      <span class="stat-value">—</span>
+      <span class="stat-label">High Risk</span>
+    </div>
+    <div class="stat-card" id="stat-avg-score">
+      <span class="stat-value">—</span>
+      <span class="stat-label">Avg Score</span>
+    </div>
+  </section>
+
+  <!-- ================================================================== -->
+  <!-- 3. MAIN CONTENT — two-column layout                                -->
+  <!-- ================================================================== -->
+  <main id="main-content">
+
+    <!-- LEFT SIDEBAR -->
+    <aside id="sidebar" aria-label="Investigation queue">
+
+      <div id="case-queue" role="list" aria-label="Case queue"></div>
+    </aside>
+
+    <!-- RIGHT PANEL -->
+    <section id="main-panel" aria-label="Investigation details">
+
+      <!-- Tab bar -->
+      <nav class="tab-bar" role="tablist" aria-label="Investigation views">
+        <button class="tab active" id="tab-btn-network"  data-tab="network"  role="tab" aria-selected="true"  aria-controls="tab-network">NETWORK</button>
+        <button class="tab"        id="tab-btn-timeline" data-tab="timeline" role="tab" aria-selected="false" aria-controls="tab-timeline">TIMELINE</button>
+        <button class="tab"        id="tab-btn-report"   data-tab="report"   role="tab" aria-selected="false" aria-controls="tab-report">REPORT</button>
+        <button class="tab"        id="tab-btn-sar"      data-tab="sar"      role="tab" aria-selected="false" aria-controls="tab-sar">SAR DRAFT</button>
+        <button class="tab"        id="tab-btn-history"  data-tab="history"  role="tab" aria-selected="false" aria-controls="tab-history">MISSION LOGS</button>
+      </nav>
+
+      <!-- Tab content panels -->
+
+      <div id="tab-network" class="tab-content active" role="tabpanel" aria-labelledby="tab-btn-network">
+        <div id="network-graph">
+          <div class="welcome-panel" style="text-align: center; display: flex; flex-direction: column; align-items: center; padding: 60px 40px;">
+            <h1 style="font-size: 3.5rem; font-weight: 800; margin-bottom: 16px; color: rgba(255,255,255,0.12); font-family: var(--font-display); letter-spacing: 8px;"><i class="fas fa-user-secret" style="margin-right: 15px;"></i>FRAUDINTEL</h1>
+            <div style="font-size: 1rem; font-weight: 300; color: rgba(255,255,255,0.3); margin-bottom: 24px; font-family: var(--font-display); letter-spacing: 0.3em;">THE AI THAT INVESTIGATES</div>
+            <div style="font-size: 0.7rem; font-weight: 600; letter-spacing: 0.4em; color: rgba(178,0,0,0.5); font-family: var(--font-display);">DETECTING &middot; CONNECTING &middot; INVESTIGATING</div>
+            <p style="color: var(--text-muted); font-size: 0.75rem; margin-top: 40px; letter-spacing: 0.1em;"><i class="fas fa-hand-point-left"></i> SELECT A CASE OR START A NEW INVESTIGATION</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="tab-timeline" class="tab-content" role="tabpanel" aria-labelledby="tab-btn-timeline">
+        <div id="investigation-timeline">Select a case to view timeline</div>
+      </div>
+
+      <div id="tab-report" class="tab-content" role="tabpanel" aria-labelledby="tab-btn-report">
+        <div id="investigation-report">Select a case to view report</div>
+      </div>
+
+      <div id="tab-sar" class="tab-content" role="tabpanel" aria-labelledby="tab-btn-sar">
+        <div id="sar-draft">Select a case to view SAR draft</div>
+      </div>
+
+      <div id="tab-history" class="tab-content" role="tabpanel" aria-labelledby="tab-btn-history">
+        <div id="mission-history-container" style="padding: 20px; font-family: var(--font-mono); color: var(--text-primary); font-size: 0.9rem;">
+          <h2 style="color: var(--accent-red); margin-bottom: 20px;"><i class="fas fa-history"></i> HISTORICAL MISSIONS</h2>
+          <div id="mission-history-list" style="display: flex; flex-direction: column; gap: 16px;">
+            <div style="color: var(--text-muted);"><i class="fas fa-info-circle"></i> No historical missions found. Execute a mission in the Command Center to record history.</div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- ================================================================== -->
+  <!-- 4. ALERT FEED                                                      -->
+  <!-- ================================================================== -->
+  <section id="alert-section" aria-label="Live alert feed">
+    <h2 class="section-heading"><i class="fas fa-bell"></i> LIVE ALERTS</h2>
+    <div id="alert-feed" role="log" aria-live="polite"></div>
+  </section>
+
+  <!-- INVESTIGATION MODAL REMOVED - REPLACED BY COMMAND CENTER -->
+
+  <!-- ================================================================== -->
+  <!-- 5B. ALERT DETAILS MODAL                                            -->
+  <!-- ================================================================== -->
+  <div id="alert-detail-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="alert-modal-title">
+    <div class="modal-backdrop" id="alert-modal-backdrop"></div>
+    <div class="modal-content alert-modal-content">
+      <button class="modal-close" id="alert-modal-close" aria-label="Close modal">&times;</button>
+      <h2 id="alert-modal-title"><i class="fas fa-exclamation-triangle"></i> ALERT DETAILS</h2>
+      <div id="alert-detail-body" class="alert-detail-body">
+        <!-- Content injected via JS -->
+      </div>
+      <div class="alert-modal-actions">
+        <button class="btn-primary" id="btn-investigate-from-modal" aria-label="Investigate this alert">
+          <i class="fas fa-search"></i> INVESTIGATE ALERT
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================================================== -->
+  <!-- 6. TOAST CONTAINER                                                 -->
+  <!-- ================================================================== -->
+  <div id="toast-container" aria-live="assertive"></div>
+
+  <!-- ================================================================== -->
+  <!-- FLOATING COMMAND CENTER CHATBOT                                      -->
+  <!-- ================================================================== -->
+  <!-- FAB Toggle Button -->
+  <button id="cc-fab" class="cc-fab" onclick="toggleCommandCenter()" aria-label="Toggle Command Center">
+    <i class="fas fa-robot cc-fab-icon-open"></i>
+    <i class="fas fa-times cc-fab-icon-close" style="display:none;"></i>
+    <span class="cc-fab-pulse"></span>
+  </button>
+
+  <!-- Floating Panel -->
+  <div id="cc-panel" class="cc-panel">
+    <!-- Header -->
+    <div class="cc-header">
+      <div class="cc-header-left">
+        <div class="cc-header-icon"><i class="fas fa-robot"></i></div>
+        <div class="cc-header-text">
+          <span class="cc-header-title">COMMAND CENTER</span>
+          <span class="cc-header-subtitle" id="cc-status-text"><span class="cc-online-dot"></span> AI Agent Online</span>
+        </div>
+      </div>
+      <div class="cc-header-actions">
+        <button class="cc-header-btn" onclick="clearMissionLog()" title="Clear chat"><i class="fas fa-trash-alt"></i></button>
+        <button class="cc-header-btn" onclick="toggleCommandCenter()" title="Close"><i class="fas fa-times"></i></button>
+      </div>
+    </div>
+
+    <!-- Agent Status Pills -->
+    <div class="cc-agents-bar">
+      <div class="agent-status" data-agent="evidence_gatherer"><div class="agent-dot"></div> Evidence</div>
+      <div class="agent-status" data-agent="risk_scorer"><div class="agent-dot"></div> Risk</div>
+      <div class="agent-status" data-agent="auditor"><div class="agent-dot"></div> Auditor</div>
+      <div class="agent-status" data-agent="compliance"><div class="agent-dot"></div> Compliance</div>
+      <div class="agent-status" data-agent="report_generator"><div class="agent-dot"></div> Report</div>
+      <div class="agent-status" data-agent="threat_intelligence"><div class="agent-dot"></div> Intel</div>
+    </div>
+
+    <!-- Chat Messages -->
+    <div id="mission-log" class="cc-messages">
+      <div class="cc-welcome">
+        <div class="cc-welcome-icon"><i class="fas fa-shield-alt"></i></div>
+        <div class="cc-welcome-title">FRAUDINTEL AI INVESTIGATOR</div>
+        <div class="cc-welcome-sub">Ask me to investigate accounts, analyze fraud patterns, or run threat intelligence.</div>
+        <div class="cc-quick-actions">
+          <button class="cc-quick-btn" onclick="quickMission('Investigate ACC-001')"><i class="fas fa-search"></i> Investigate ACC-001</button>
+          <button class="cc-quick-btn" onclick="quickMission('Analyze emerging fraud trends')"><i class="fas fa-chart-line"></i> Fraud trends</button>
+          <button class="cc-quick-btn" onclick="quickMission('Show high risk accounts')"><i class="fas fa-exclamation-triangle"></i> High risk accounts</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Input Area -->
+    <div class="cc-input-area">
+      <div class="cc-input-wrapper">
+        <input type="text" id="mission-input" class="cc-input" placeholder="Enter mission or account ID..." autocomplete="off" />
+        <button id="btn-execute-mission" class="cc-send-btn" aria-label="Send">
+          <i class="fas fa-paper-plane"></i>
+        </button>
+      </div>
+      <div class="cc-input-hint">Press Enter to send · Powered by Gemini 3.5 Flash</div>
+    </div>
+  </div>
+
+  <!-- ================================================================== -->
+  <!-- 7. FOOTER BAR                                                      -->
+  <!-- ================================================================== -->
+  <footer class="hud-footer">
+    <div class="hud-footer-left">
+      <span class="status-indicator">SYSTEM OPERATIONAL</span>
+      <span>|</span>
+      <span>FraudIntel v1.0.0</span>
+    </div>
+    <div class="hud-footer-right">
+      <span>GEMINI 3.5 · MONGODB MCP · VERTEX AI</span>
+      <span>|</span>
+      <span id="footer-time"></span>
+    </div>
+  </footer>
+
+  <!-- ================================================================== -->
+  <!-- Scripts                                                            -->
+  <!-- ================================================================== -->
+  <script src="js/network-graph.js?v=6"></script>
+  <script src="js/app.js?v=6"></script>
+
+  <!-- Live Clock Script -->
+  <script>
+    (function updateClocks() {
+      const now = new Date();
+      const utc = now.toISOString().replace('T', ' ').substring(0, 19) + ' UTC';
+      const local = now.toLocaleTimeString('en-US', { hour12: false });
+      const tickerTime = document.getElementById('ticker-time');
+      const footerTime = document.getElementById('footer-time');
+      if (tickerTime) tickerTime.textContent = 'UTC: ' + utc;
+      if (footerTime) footerTime.textContent = local;
+      setTimeout(updateClocks, 1000);
+    })();
+  </script>
+
+</body>
+</html>

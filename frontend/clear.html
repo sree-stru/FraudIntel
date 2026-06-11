@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Clearing History...</title>
+</head>
+<body style="background: #000; color: #fff; font-family: monospace; padding: 20px;">
+    <h1>Clearing Mission History...</h1>
+    <script>
+        localStorage.removeItem('fi_mission_history');
+        setTimeout(() => {
+            window.location.href = '/';
+        }, 500);
+    </script>
+</body>
+</html>

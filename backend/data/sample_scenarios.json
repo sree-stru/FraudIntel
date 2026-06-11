@@ -1,0 +1,405 @@
+[
+  {
+    "scenario_id": "SCN-001",
+    "name": "The Bust-Out Ring",
+    "description": "A coordinated bust-out scheme involving four linked accounts that built credit over nine months before simultaneously extracting funds across cash advances, high-value purchases, and balance transfers within a 36-hour window.",
+    "risk_level": "HIGH",
+    "expected_risk_score": 78,
+    "expected_classification": "bust_out",
+    "accounts": [
+      {
+        "account_id": "ACC-001",
+        "holder_name": "Marcus J. Whitfield",
+        "account_type": "credit_card",
+        "open_date": "2025-07-15",
+        "credit_limit": 25000,
+        "current_balance": 24800,
+        "utilization_pct": 99.2,
+        "device_fingerprint": "DFP-8a3c1f",
+        "last_known_ip": "198.51.100.44"
+      },
+      {
+        "account_id": "ACC-002",
+        "holder_name": "Danielle K. Whitfield",
+        "account_type": "credit_card",
+        "open_date": "2025-08-02",
+        "credit_limit": 20000,
+        "current_balance": 19650,
+        "utilization_pct": 98.3,
+        "device_fingerprint": "DFP-8a3c1f",
+        "last_known_ip": "198.51.100.44"
+      },
+      {
+        "account_id": "ACC-003",
+        "holder_name": "Terrence R. Blake",
+        "account_type": "credit_card",
+        "open_date": "2025-09-10",
+        "credit_limit": 18000,
+        "current_balance": 17900,
+        "utilization_pct": 99.4,
+        "device_fingerprint": "DFP-6d9e2b",
+        "last_known_ip": "198.51.100.44"
+      },
+      {
+        "account_id": "ACC-004",
+        "holder_name": "Jasmine L. Torres",
+        "account_type": "credit_card",
+        "open_date": "2025-08-20",
+        "credit_limit": 22000,
+        "current_balance": 21700,
+        "utilization_pct": 98.6,
+        "device_fingerprint": "DFP-6d9e2b",
+        "last_known_ip": "203.0.113.17"
+      }
+    ],
+    "key_transactions": [
+      {
+        "transaction_id": "TXN-50001",
+        "account_id": "ACC-001",
+        "type": "cash_advance",
+        "amount": 9800,
+        "currency": "USD",
+        "timestamp": "2026-05-28T02:14:00Z",
+        "merchant": "ATM Network - Downtown Financial Center",
+        "location": "Chicago, IL",
+        "device_fingerprint": "DFP-8a3c1f",
+        "ip_address": "198.51.100.44"
+      },
+      {
+        "transaction_id": "TXN-50002",
+        "account_id": "ACC-002",
+        "type": "purchase",
+        "amount": 7200,
+        "currency": "USD",
+        "timestamp": "2026-05-28T03:41:00Z",
+        "merchant": "EliteTech Electronics - Online",
+        "location": "Online",
+        "device_fingerprint": "DFP-8a3c1f",
+        "ip_address": "198.51.100.44"
+      },
+      {
+        "transaction_id": "TXN-50003",
+        "account_id": "ACC-003",
+        "type": "purchase",
+        "amount": 8500,
+        "currency": "USD",
+        "timestamp": "2026-05-28T04:10:00Z",
+        "merchant": "Prestige Jewelers International",
+        "location": "Chicago, IL",
+        "device_fingerprint": "DFP-6d9e2b",
+        "ip_address": "198.51.100.44"
+      },
+      {
+        "transaction_id": "TXN-50004",
+        "account_id": "ACC-004",
+        "type": "balance_transfer",
+        "amount": 15000,
+        "currency": "USD",
+        "timestamp": "2026-05-28T06:22:00Z",
+        "merchant": "Interbank Transfer - Apex Credit Union",
+        "location": "Online",
+        "device_fingerprint": "DFP-6d9e2b",
+        "ip_address": "203.0.113.17"
+      },
+      {
+        "transaction_id": "TXN-50005",
+        "account_id": "ACC-001",
+        "type": "purchase",
+        "amount": 12400,
+        "currency": "USD",
+        "timestamp": "2026-05-28T11:05:00Z",
+        "merchant": "LuxeGoods Marketplace",
+        "location": "Online",
+        "device_fingerprint": "DFP-8a3c1f",
+        "ip_address": "198.51.100.44"
+      },
+      {
+        "transaction_id": "TXN-50006",
+        "account_id": "ACC-003",
+        "type": "cash_advance",
+        "amount": 7500,
+        "currency": "USD",
+        "timestamp": "2026-05-28T14:30:00Z",
+        "merchant": "ATM Network - O'Hare Terminal 3",
+        "location": "Chicago, IL",
+        "device_fingerprint": "DFP-6d9e2b",
+        "ip_address": "198.51.100.44"
+      }
+    ],
+    "entity_links": [
+      {
+        "entity_id": "ACC-001",
+        "linked_entity_id": "ACC-002",
+        "entity_type": "account",
+        "link_type": "shared_device",
+        "link_detail": "DFP-8a3c1f",
+        "confidence": 0.97
+      },
+      {
+        "entity_id": "ACC-003",
+        "linked_entity_id": "ACC-004",
+        "entity_type": "account",
+        "link_type": "shared_device",
+        "link_detail": "DFP-6d9e2b",
+        "confidence": 0.95
+      },
+      {
+        "entity_id": "ACC-001",
+        "linked_entity_id": "ACC-003",
+        "entity_type": "account",
+        "link_type": "shared_ip",
+        "link_detail": "198.51.100.44 (VPN — NordVPN exit node)",
+        "confidence": 0.88
+      },
+      {
+        "entity_id": "ACC-001",
+        "linked_entity_id": "ACC-002",
+        "entity_type": "account",
+        "link_type": "shared_address",
+        "link_detail": "1847 W. Addison St, Unit 3B, Chicago, IL 60613",
+        "confidence": 0.99
+      }
+    ],
+    "expected_findings": [
+      "Four accounts sharing two device fingerprints indicate coordinated operation",
+      "All accounts reached >98% utilization within the same 36-hour window",
+      "Shared VPN IP address (198.51.100.44) across three accounts suggests deliberate obfuscation",
+      "Credit-building behavior for 9+ months followed by simultaneous extraction matches bust-out typology",
+      "Total extracted value of $60,400 across cash advances and high-resale merchandise"
+    ]
+  },
+  {
+    "scenario_id": "SCN-002",
+    "name": "Account Takeover",
+    "description": "A high-severity account takeover of a premium banking customer where the attacker gained access through a SIM-swap, reset credentials, added a new device, and initiated a $25,000 wire transfer—all within 22 minutes. Geographic impossibility between login locations confirms unauthorized access.",
+    "risk_level": "CRITICAL",
+    "expected_risk_score": 91,
+    "expected_classification": "account_takeover",
+    "accounts": [
+      {
+        "account_id": "ACC-010",
+        "holder_name": "Dr. Catherine M. Hargrove",
+        "account_type": "premium_checking",
+        "open_date": "2019-03-12",
+        "current_balance": 134200,
+        "usual_transaction_range": [50, 3000],
+        "home_location": "New York, NY",
+        "registered_devices": ["DFP-a1b2c3"],
+        "last_known_ip": "72.229.28.185"
+      }
+    ],
+    "key_transactions": [
+      {
+        "transaction_id": "TXN-70001",
+        "account_id": "ACC-010",
+        "type": "password_reset",
+        "amount": 0,
+        "currency": "USD",
+        "timestamp": "2026-06-01T14:02:00Z",
+        "merchant": null,
+        "location": "New York, NY",
+        "device_fingerprint": "DFP-a1b2c3",
+        "ip_address": "72.229.28.185",
+        "details": "Password reset initiated via SMS OTP (SIM-swap suspected)"
+      },
+      {
+        "transaction_id": "TXN-70002",
+        "account_id": "ACC-010",
+        "type": "device_registration",
+        "amount": 0,
+        "currency": "USD",
+        "timestamp": "2026-06-01T14:05:00Z",
+        "merchant": null,
+        "location": "London, UK",
+        "device_fingerprint": "DFP-x9y8z7",
+        "ip_address": "185.220.101.34",
+        "details": "New device registered from London IP — Tor exit node"
+      },
+      {
+        "transaction_id": "TXN-70003",
+        "account_id": "ACC-010",
+        "type": "contact_change",
+        "amount": 0,
+        "currency": "USD",
+        "timestamp": "2026-06-01T14:08:00Z",
+        "merchant": null,
+        "location": "London, UK",
+        "device_fingerprint": "DFP-x9y8z7",
+        "ip_address": "185.220.101.34",
+        "details": "Email changed from c.hargrove@gmail.com to c.hargrove.recovery@proton.me"
+      },
+      {
+        "transaction_id": "TXN-70004",
+        "account_id": "ACC-010",
+        "type": "wire_transfer",
+        "amount": 25000,
+        "currency": "USD",
+        "timestamp": "2026-06-01T14:18:00Z",
+        "merchant": "International Wire - Meridian Trust AG (Zurich)",
+        "location": "London, UK",
+        "device_fingerprint": "DFP-x9y8z7",
+        "ip_address": "185.220.101.34",
+        "details": "Beneficiary: Meridian Trust AG, IBAN: CH93 0076 2011 6238 5295 7"
+      },
+      {
+        "transaction_id": "TXN-70005",
+        "account_id": "ACC-010",
+        "type": "wire_transfer",
+        "amount": 25000,
+        "currency": "USD",
+        "timestamp": "2026-06-01T14:24:00Z",
+        "merchant": "International Wire - Meridian Trust AG (Zurich)",
+        "location": "London, UK",
+        "device_fingerprint": "DFP-x9y8z7",
+        "ip_address": "185.220.101.34",
+        "details": "Second wire attempt — blocked by velocity rule"
+      }
+    ],
+    "entity_links": [
+      {
+        "entity_id": "ACC-010",
+        "linked_entity_id": "DFP-x9y8z7",
+        "entity_type": "device",
+        "link_type": "new_device",
+        "link_detail": "Device registered 3 minutes after password reset from different continent",
+        "confidence": 0.99
+      },
+      {
+        "entity_id": "DFP-x9y8z7",
+        "linked_entity_id": "185.220.101.34",
+        "entity_type": "ip_address",
+        "link_type": "tor_exit_node",
+        "link_detail": "Known Tor exit node associated with prior ATO campaigns",
+        "confidence": 0.94
+      },
+      {
+        "entity_id": "ACC-010",
+        "linked_entity_id": "IBAN-CH93-0076",
+        "entity_type": "beneficiary",
+        "link_type": "first_time_payee",
+        "link_detail": "Meridian Trust AG — no prior relationship with account holder",
+        "confidence": 0.92
+      }
+    ],
+    "expected_findings": [
+      "Geographic impossibility: New York login followed by London device registration 3 minutes later",
+      "Credential reset via SIM-swap immediately preceded unauthorized device enrollment",
+      "Contact email changed to an attacker-controlled Proton Mail address to intercept alerts",
+      "$25,000 wire to a first-time international beneficiary far exceeds normal spending range of $50–$3,000",
+      "Second wire attempt blocked by velocity controls — total attempted extraction: $50,000"
+    ]
+  },
+  {
+    "scenario_id": "SCN-003",
+    "name": "Legitimate Travel",
+    "description": "A long-standing customer with documented international travel patterns makes purchases in Paris consistent with their spending profile, travel history, and declared itinerary. All transactions align with behavioral baselines and no anomalous signals are present. This scenario serves as a false-positive calibration case.",
+    "risk_level": "LOW",
+    "expected_risk_score": 15,
+    "expected_classification": "legitimate",
+    "accounts": [
+      {
+        "account_id": "ACC-030",
+        "holder_name": "Jonathan R. Ashworth",
+        "account_type": "premium_checking",
+        "open_date": "2017-11-03",
+        "current_balance": 87500,
+        "usual_transaction_range": [20, 5000],
+        "home_location": "San Francisco, CA",
+        "registered_devices": ["DFP-m4n5o6"],
+        "last_known_ip": "104.132.45.78",
+        "travel_history": [
+          "Paris, France — 2025-03-10 to 2025-03-18",
+          "Tokyo, Japan — 2025-07-22 to 2025-08-01",
+          "London, UK — 2025-11-14 to 2025-11-20"
+        ]
+      }
+    ],
+    "key_transactions": [
+      {
+        "transaction_id": "TXN-90001",
+        "account_id": "ACC-030",
+        "type": "purchase",
+        "amount": 245,
+        "currency": "EUR",
+        "timestamp": "2026-06-02T09:30:00Z",
+        "merchant": "Café de Flore",
+        "location": "Paris, France",
+        "device_fingerprint": "DFP-m4n5o6",
+        "ip_address": "90.83.124.17"
+      },
+      {
+        "transaction_id": "TXN-90002",
+        "account_id": "ACC-030",
+        "type": "purchase",
+        "amount": 1850,
+        "currency": "EUR",
+        "timestamp": "2026-06-02T14:15:00Z",
+        "merchant": "Galeries Lafayette Haussmann",
+        "location": "Paris, France",
+        "device_fingerprint": "DFP-m4n5o6",
+        "ip_address": "90.83.124.17"
+      },
+      {
+        "transaction_id": "TXN-90003",
+        "account_id": "ACC-030",
+        "type": "purchase",
+        "amount": 420,
+        "currency": "EUR",
+        "timestamp": "2026-06-02T19:45:00Z",
+        "merchant": "Le Jules Verne — Tour Eiffel",
+        "location": "Paris, France",
+        "device_fingerprint": "DFP-m4n5o6",
+        "ip_address": "90.83.124.17"
+      },
+      {
+        "transaction_id": "TXN-90004",
+        "account_id": "ACC-030",
+        "type": "hotel",
+        "amount": 3200,
+        "currency": "EUR",
+        "timestamp": "2026-06-03T11:00:00Z",
+        "merchant": "Hôtel Le Meurice — Dorchester Collection",
+        "location": "Paris, France",
+        "device_fingerprint": "DFP-m4n5o6",
+        "ip_address": "90.83.124.17"
+      },
+      {
+        "transaction_id": "TXN-90005",
+        "account_id": "ACC-030",
+        "type": "purchase",
+        "amount": 680,
+        "currency": "EUR",
+        "timestamp": "2026-06-03T16:30:00Z",
+        "merchant": "Musée d'Orsay Gift Shop",
+        "location": "Paris, France",
+        "device_fingerprint": "DFP-m4n5o6",
+        "ip_address": "90.83.124.17"
+      }
+    ],
+    "entity_links": [
+      {
+        "entity_id": "ACC-030",
+        "linked_entity_id": "DFP-m4n5o6",
+        "entity_type": "device",
+        "link_type": "registered_device",
+        "link_detail": "Primary device in use since 2024 — consistent with account history",
+        "confidence": 0.99
+      },
+      {
+        "entity_id": "ACC-030",
+        "linked_entity_id": "90.83.124.17",
+        "entity_type": "ip_address",
+        "link_type": "hotel_wifi",
+        "link_detail": "French residential ISP range — consistent with Paris hotel stay",
+        "confidence": 0.95
+      }
+    ],
+    "expected_findings": [
+      "All transactions originate from the customer's registered device (DFP-m4n5o6)",
+      "Spending amounts ($245–$3,200) fall within the established $20–$5,000 behavioral range",
+      "Paris location is consistent with documented travel history showing prior European trips",
+      "Single consistent IP address throughout the stay indicates stable hotel connection, not VPN hopping",
+      "No credential changes, new devices, or contact modifications during the travel period"
+    ]
+  }
+]
