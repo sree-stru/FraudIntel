@@ -126,9 +126,15 @@ async def health_check():
 
 
 # Static files — Mount LAST so API routes take priority
-dashboard_dir = Path(__file__).parent.parent.parent / "frontend"
-if dashboard_dir.exists():
-    app.mount("/", StaticFiles(directory=str(dashboard_dir), html=True), name="dashboard")
+local_dev_dir = Path(__file__).parent.parent.parent / "frontend"
+docker_dir = Path(__file__).parent.parent / "frontend"
+
+if local_dev_dir.exists():
+    app.mount("/", StaticFiles(directory=str(local_dev_dir), html=True), name="dashboard")
+elif docker_dir.exists():
+    app.mount("/", StaticFiles(directory=str(docker_dir), html=True), name="dashboard")
+else:
+    logger.warning("Frontend directory not found. Static files will not be served.")
 
 
 if __name__ == "__main__":
